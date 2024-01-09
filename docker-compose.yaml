@@ -1,0 +1,33 @@
+
+version : '3.2'
+services:
+    lb:
+        image: haproxy:2.2
+        restart: always
+        ports:
+            - "3005:3005"
+        volumes:
+            - ./haproxy:/usr/local/etc/haproxy
+        deploy:
+            resources:
+                limits:
+                    memory: 500M
+        container_name: Haproxy
+    
+    apache:
+        image: 'php:7.2-apache'
+        container_name: php
+        restart: always
+        ports:
+        - '80:80'
+        volumes:
+            - ./server1:/var/www/html
+
+    apache2:
+        image: 'php:7.2-apache'
+        container_name: php2
+        restart: always
+        ports:
+        - '81:80'
+        volumes:
+            - ./server2:/var/www/html
